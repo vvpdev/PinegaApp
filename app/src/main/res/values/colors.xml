@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#9F1C3B97</color>
+    <color name="colorPrimaryDark">#8AA6D3</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="card_fon">#43CBE0EE</color>
+    <color name="background_activity">#97FFFFFF</color>
+    <color name="colorHeader">#6D4D8372</color>
+    <color name="colorIndicatorTRUE">#904AC02D</color>
+    <color name="colorIndicatorFALSE">#70B6F1A6</color>
+</resources>

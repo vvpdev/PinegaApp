@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+
+    <!-- элементы меню в тулбаре -->
+
+    <!-- поделиться  -->
+    <item android:id="@+id/share_app"
+        android:title="@string/share_app"
+        android:icon="@drawable/share_icon"
+        android:orderInCategory="1"
+        app:showAsAction="always"
+        app:actionProviderClass="android.support.v7.widget.ShareActionProvider">
+    </item>
+
+
+    <item android:id="@+id/dev_activity"
+        android:title="@string/dev_activity"
+        android:icon="@drawable/dev_icon"
+        android:orderInCategory="2"
+        app:showAsAction="ifRoom">
+    </item>
+
+
+
+
+
+
+
+
+
+
+</menu>
