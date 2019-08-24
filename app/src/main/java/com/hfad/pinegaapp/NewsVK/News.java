@@ -1,10 +1,6 @@
 package com.hfad.pinegaapp.NewsVK;
 
 
-
-        // класс для объектов Новости
-
-
 public class News {
 
     private String imageNews;
@@ -26,7 +22,6 @@ public class News {
     }
 
 
-    // геттеры
 
     public String getImageNews() {
         return imageNews;

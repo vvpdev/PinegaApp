@@ -9,8 +9,6 @@ import com.hfad.pinegaapp.R;
 public class ActivityAboutApp extends AppCompatActivity {
 
 
-
-    // тулбар
     public Toolbar toolbar_main;
 
 
@@ -20,17 +18,12 @@ public class ActivityAboutApp extends AppCompatActivity {
         setContentView(R.layout.activity_about_app);
 
 
-        // Находим тулбар
         toolbar_main = (Toolbar) findViewById(R.id.toolbar);
 
-        // добавляем поддержку ActionBar
         setSupportActionBar(toolbar_main);
 
-        // кнопка назад в тулбаре
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-
 
 
     }

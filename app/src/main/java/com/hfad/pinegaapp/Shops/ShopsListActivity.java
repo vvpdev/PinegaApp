@@ -17,10 +17,9 @@ import java.util.ArrayList;
 public class ShopsListActivity extends AppCompatActivity {
 
 
-    // тулбар
+
     public Toolbar toolbar_main;
 
-    // для слушателя - выбранная категория      ОБЯЗАТЕЛЬНО static !!!!!!!!!!!!!!!!!!
     public static int select_category;
 
 
@@ -30,18 +29,14 @@ public class ShopsListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shops_list);
 
-        // Находим тулбар
         toolbar_main = (Toolbar) findViewById(R.id.toolbar);
 
-        // добавляем поддержку ActionBar
         setSupportActionBar(toolbar_main);
 
-        // кнопка назад в тулбаре
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
 
-        // списковый массив для категорий
         ArrayList<String> shopsCategoryList = new ArrayList<>();
 
         shopsCategoryList.add("Продовольственные");
@@ -51,10 +46,8 @@ public class ShopsListActivity extends AppCompatActivity {
         shopsCategoryList.add("Хоз. товары");
 
 
-        // находим ListView
         ListView listViewShopsCategory = (ListView) findViewById(R.id.shopsCategoryListView);
 
-        // адаптер
         ArrayAdapter<String> adapterViewShopsCategory = new ArrayAdapter<>(
 
                 getApplicationContext(),
@@ -84,13 +77,11 @@ public class ShopsListActivity extends AppCompatActivity {
 }
 
 
-        // переопределяем выбранную подкатегорию
+
     public void setSelect_category (int position){
         select_category = position;
     }
 
-
-        //  возвращаем полученную подкатегорию
     public int getSelect_category() {
         return select_category;
     }

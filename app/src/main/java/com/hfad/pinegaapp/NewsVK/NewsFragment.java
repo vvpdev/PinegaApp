@@ -31,13 +31,12 @@ public class NewsFragment extends Fragment {
 
     List<Item> arrayItems = new ArrayList<>();     // для items новостей из JSON
 
-    static ArrayList <News> arrayAllNews = new ArrayList<>();      // объекты - новости для RecyclerView
+    static ArrayList <News> arrayAllNews = new ArrayList<>();
 
     LinearLayoutManager linearLayoutManager;
     AdapterRecyclerViewNews adapterRecyclerViewNews;
 
 
-    // добавляем, чтоб во фрагменте можно было работать с элементами View
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -68,7 +67,6 @@ public class NewsFragment extends Fragment {
 
                             arrayItems = response.body().getResponse().getItems();  // массив items
 
-
                             String textNews = "";
                             String textTitle = "";
                             String imageURL = "";   // url картинки
@@ -76,24 +74,19 @@ public class NewsFragment extends Fragment {
                             int id = 0;             // id поста
 
 
-                            // проходим по массиву
                             for (int i = 0; i < arrayItems.size(); i++){
-
-
 
                                 if (arrayItems.get(i).getCopyHistory() == null){    // если нет репоста
 
 
-                                    // ТЕКСТ______________________________________________________________
-
-                                    if (arrayItems.get(i).getText() != null){       // если есть текст
-                                        textNews = arrayItems.get(i).getText();     // берем весь текст
+                                    if (arrayItems.get(i).getText() != null){
+                                        textNews = arrayItems.get(i).getText();
 
                                         if (textNews.contains("\n")){
-                                            String[] title_news = textNews.split("\n"); // разделить строку на части используя regex - регулярное выражение
-                                            textTitle = title_news[0];                         // берем первую часть - заголовок
+                                            String[] title_news = textNews.split("\n");
+                                            textTitle = title_news[0];
                                         }
-                                        else {                                      // если весь текст - заголовок
+                                        else {
                                             textTitle = textNews;
                                         }
                                      }
@@ -104,32 +97,27 @@ public class NewsFragment extends Fragment {
 
 
 
-                                    // КАРТИНКА___________________________________________________________
 
 
-                                    if (arrayItems.get(i).getAttachments() != null){       // если ВООБЩЕ есть вложения
 
-                                        if (arrayItems.get(i).getAttachments().get(0).getPhoto() != null){      // если просто картинка
+                                    if (arrayItems.get(i).getAttachments() != null){
+
+                                        if (arrayItems.get(i).getAttachments().get(0).getPhoto() != null){
                                             imageURL = arrayItems.get(i).getAttachments().get(0).getPhoto().getSizes().get(3).getUrl();
                                         }
 
-                                        if (arrayItems.get(i).getAttachments().get(0).getVideo() != null){      // если ведос
+                                        if (arrayItems.get(i).getAttachments().get(0).getVideo() != null){
 
                                             imageURL = arrayItems.get(i).getAttachments().get(0).getVideo().getImage().get(3).getUrl();
                                         }
 
 
-                                        if (arrayItems.get(i).getAttachments().get(0).getAlbum() != null){      // если альбом
+                                        if (arrayItems.get(i).getAttachments().get(0).getAlbum() != null){
 
                                             imageURL = arrayItems.get(i).getAttachments().get(0).getAlbum().getThumb().getSizes().get(4).getUrl();
                                         }
 
                                     }
-
-
-
-                                    // ID  ___________________________________________________________
-
 
                                     owner_id = arrayItems.get(i).getOwnerId();
                                     id = arrayItems.get(i).getId();
@@ -141,8 +129,6 @@ public class NewsFragment extends Fragment {
 
                                 else {                                              // если репост
 
-
-                                    // ТЕКСТ______________________________________________________________
 
                                     if (arrayItems.get(i).getCopyHistory().get(0).getText() != null){
 
@@ -163,39 +149,28 @@ public class NewsFragment extends Fragment {
 
 
 
-                                    // КАРТИНКА___________________________________________________________
+                                    if (arrayItems.get(i).getCopyHistory().get(0).getAttachments() != null){
 
-
-                                    if (arrayItems.get(i).getCopyHistory().get(0).getAttachments() != null){       // если ВООБЩЕ есть вложения
-
-                                        if (arrayItems.get(i).getCopyHistory().get(0).getAttachments().get(0).getPhoto() != null){      // если просто картинка
+                                        if (arrayItems.get(i).getCopyHistory().get(0).getAttachments().get(0).getPhoto() != null){
                                             imageURL = arrayItems.get(i).getCopyHistory().get(0).getAttachments().get(0).getPhoto().getSizes().get(3).getUrl();
                                         }
 
-                                        if (arrayItems.get(i).getCopyHistory().get(0).getAttachments().get(0).getVideo() != null){      // если ведос
+                                        if (arrayItems.get(i).getCopyHistory().get(0).getAttachments().get(0).getVideo() != null){
 
                                             imageURL = arrayItems.get(i).getAttachments().get(0).getVideo().getImage().get(3).getUrl();
                                         }
 
-
-                                        if (arrayItems.get(i).getCopyHistory().get(0).getAttachments().get(0).getAlbum() != null){      // если альбом
+                                        if (arrayItems.get(i).getCopyHistory().get(0).getAttachments().get(0).getAlbum() != null){
 
                                             imageURL = arrayItems.get(i).getAttachments().get(0).getAlbum().getThumb().getSizes().get(4).getUrl();
                                         }
 
                                     }
 
-
-
-                                    // ID  ___________________________________________________________
-
                                     owner_id = arrayItems.get(i).getCopyHistory().get(0).getOwnerId();
                                     id = arrayItems.get(i).getCopyHistory().get(0).getId();
 
                                 }
-
-
-
 
                                 arrayAllNews.add(new News(imageURL, textTitle, textNews, owner_id, id));
 

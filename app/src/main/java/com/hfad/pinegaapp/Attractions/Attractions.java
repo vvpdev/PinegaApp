@@ -1,20 +1,18 @@
 package com.hfad.pinegaapp.Attractions;
 
-// класс для предоставления данных к RecyclerView
-
 import com.hfad.pinegaapp.R;
 
-// класс для объектов Достопримечательности
+
 
 public class Attractions {
 
 
-        // переменные для значений объектов
+
         private String attract_title;
         private String attract_sub_title;
         private int attract_image;
 
-        // для контента
+
         private int text_article1;
         private int text_article2;
         private int text_article3;
@@ -29,14 +27,14 @@ public class Attractions {
           private int image_in_text5;
 
 
-        // конструктор объектов
+
     public Attractions (
 
-            String attract_title_constr,        // заголовок
-            String attract_sub_title_constr,    // подзаголовок
-            int attract_image_constr,           // картинка для Header
+            String attract_title_constr,
+            String attract_sub_title_constr,
+            int attract_image_constr,
 
-            // контент
+
             int text_article1,
             int text_article2,
             int text_article3,
@@ -57,7 +55,7 @@ public class Attractions {
         this.attract_image = attract_image_constr;
 
 
-        // контент
+
 
         this.text_article1 = text_article1;
         this.text_article2 = text_article2;
@@ -74,7 +72,7 @@ public class Attractions {
              }
 
 
-    // геттеры
+
 
     public String getAttract_title (){
         return this.attract_title; }
@@ -112,8 +110,7 @@ public class Attractions {
 
 
 
-    //__________________________________________________________________________________________
-        // массив с достопримечательностями
+
     public static final Attractions[] attractionsList ={
 
 

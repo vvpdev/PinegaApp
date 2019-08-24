@@ -1,11 +1,5 @@
 package com.hfad.pinegaapp.DateBase;
 
-
-
-
-        // клас для Базы Данных
-
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -17,15 +11,14 @@ public class DateBasePinega extends  SQLiteOpenHelper{
 
 
 
-        // имя БД
+
     public static final String DB_NAME = "PinegaDateBase";
 
-    // версия БД
     public static final int DB_VERSION = 1;
 
 
 
-    // конструктор БД
+
     public DateBasePinega(Context context){
          super(context, DB_NAME, null,  DB_VERSION);
     }
@@ -40,18 +33,15 @@ public class DateBasePinega extends  SQLiteOpenHelper{
 
 
 
-        // таблица - данные для магазинов
+
         db.execSQL("CREATE TABLE SHOPS ("
-                                                                                            //_________________________
-                + "_id INTEGER PRIMARY KEY AUTOINCREMENT," // ключевое поле по дефолту      счет идет с 1 !!!!!!!!!!!!!
-                + " CATEGORY_SHOP INTEGER,"     // категория (группа) магазина
-                + " TITLE_SHOP TEXT,"           // текст поста
-                + " IMAGE_RESOURCE_SHOP INTEGER,"     // url для картинки
-                + " DESCRIPTION_SHOP TEXT)"  );      // id паблика
 
+                + "_id INTEGER PRIMARY KEY AUTOINCREMENT,"    // счет идет с 1
+                + " CATEGORY_SHOP INTEGER,"
+                + " TITLE_SHOP TEXT,"
+                + " IMAGE_RESOURCE_SHOP INTEGER,"
+                + " DESCRIPTION_SHOP TEXT)"  );
 
-
-        // вставляем через метод
 
         insertTableShops(db, 0, "ПОСПО", R.drawable.rybalka, "продукты, бакалея, кондитерские изделия");
         insertTableShops(db, 0, "Кубик", R.drawable.kubik, "продукты, бакалея, кондитерские изделия");
@@ -65,9 +55,6 @@ public class DateBasePinega extends  SQLiteOpenHelper{
 
 
 
-
-
-    // метод для заполнения БД
     public static void insertTableShops (SQLiteDatabase db, int category, String title, int resource_image, String description){
 
         ContentValues values = new ContentValues();

@@ -14,15 +14,14 @@ import com.bumptech.glide.Glide;
 import com.hfad.pinegaapp.R;
 
 
-// фрагмент для главной вкладки ViewPager
 
 public class MainFragment extends Fragment {
 
 
-    // определяем элементы макета
+
     ViewFlipper viewFlipperMainFrag;
 
-    // галерея   картинок для слайд шоу
+
     ImageView imageFlipper1;
     ImageView imageFlipper2;
     ImageView imageFlipper3;
@@ -46,7 +45,6 @@ public class MainFragment extends Fragment {
         // флиппер - галерея
         viewFlipperMainFrag = (ViewFlipper) view.findViewById(R.id.ViewFlipperGallery);
 
-        // для галереи
         imageFlipper1 = (ImageView) view.findViewById(R.id.imageFlipper1);
         imageFlipper2 = (ImageView) view.findViewById(R.id.imageFlipper2);
         imageFlipper3 = (ImageView) view.findViewById(R.id.imageFlipper3);
@@ -65,18 +63,14 @@ public class MainFragment extends Fragment {
         @Override
         public void run (){
 
-
-            // начинать сразу
             viewFlipperMainFrag.setAutoStart(true);
 
-            // интервал смены картинок
             viewFlipperMainFrag.setFlipInterval(4500);
 
-            viewFlipperMainFrag.setInAnimation(getActivity(), R.anim.anim_in);  // акнимация появления нового айтема
-            viewFlipperMainFrag.setOutAnimation(getActivity(), R.anim.anim_out);    // анимация скрытия старого айтема
+            viewFlipperMainFrag.setInAnimation(getActivity(), R.anim.anim_in);
+            viewFlipperMainFrag.setOutAnimation(getActivity(), R.anim.anim_out);
 
 
-            // обновление UI
             onLoadingImage();
         }
 
@@ -91,7 +85,7 @@ public class MainFragment extends Fragment {
                     Glide
                             .with(getActivity())
                             .load(R.drawable.flipper1)
-                            .centerCrop()   // масштабирует изображение равномерно, чтоб заполняло область
+                            .centerCrop()
                             .into(imageFlipper1);
 
 

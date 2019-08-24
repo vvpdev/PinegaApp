@@ -1,16 +1,11 @@
 package com.hfad.pinegaapp.Main;
 
-import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -24,8 +19,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 
@@ -33,38 +26,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.hfad.pinegaapp.NewsVK.AdapterRecyclerViewNews;
 import com.hfad.pinegaapp.Attractions.AttractionsFragment;
-import com.hfad.pinegaapp.DateBase.DateBasePinega;
-import com.hfad.pinegaapp.NewsVK.News;
 import com.hfad.pinegaapp.NewsVK.NewsFragment;
 import com.hfad.pinegaapp.R;
 import com.hfad.pinegaapp.Shops.ShopsListActivity;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
-import java.util.ArrayList;
 
 import static android.view.View.GONE;
-
-
-                // иконка приложения задается в манифесте
-             // добавлять через image asset
-
-            // добавить метод проверки интернета
-
-            // доделать проверку с инетом - прогресс бар
-
-          // переделать достопримечательности
 
 
 
@@ -72,23 +40,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
 
-    // поставщик действия - для кнопки поделиться
+
     public ShareActionProvider shareActionProvider;
 
-    // тулбар
     public Toolbar toolbar_main;
 
-    // DrawerLayout макет
     DrawerLayout drawerLayout;
 
-    // переменная для проверки запуска афинхронного потока
     public boolean onStartAsyncTask = false;
 
 
 
-    //______________________________________________________________________________________________
-    //  проверка интернета приемником вещания
-    //______________________________________________________________________________________________
+
+    //  проверка интернета
     final String BROADCAST_ACTION = "android.net.conn.CONNECTIVITY_CHANGE";
 
     IntentFilter intentFilter = new IntentFilter(BROADCAST_ACTION);
@@ -100,13 +64,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             String action = intent.getAction();
 
             switch (action) {
-                case BROADCAST_ACTION: onCheckInternet();   // запускаем поток для проверки инета
+                case BROADCAST_ACTION: onCheckInternet();
                     break;
             }
         }
     };
-
-
 
 
 
@@ -117,69 +79,45 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
 
-        // создаем объект для создания и управления версиями БД
-      //  dateBasePinega_obj = new DateBasePinega(this);
-
-
-
-
-        // Находим тулбар
         toolbar_main = (Toolbar) findViewById(R.id.toolbar);
 
-        // добавляем поддержку ActionBar
         setSupportActionBar(toolbar_main);
 
-        // объект созданного нами класса SectionPagerAdapter -  sectionPagerAdapter
         SectionPagerAdapter sectionPagerAdapter = new SectionPagerAdapter(getSupportFragmentManager());
 
-        //находим ViewPager
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
 
-        // присоединяем адаптер к ViewPager
         viewPager.setAdapter(sectionPagerAdapter);
 
-        // находим TabLayout
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
 
-        // присоединяем TabLayout к ViewPager
         tabLayout.setupWithViewPager(viewPager);
 
 
-        //__________________________________________________________________________________________
-        // скроем, т.к. вкладки отображает PagerTabStrip
+
         tabLayout.setVisibility(GONE);
-        //__________________________________________________________________________________________
 
 
-        // DrawerLayout - макет
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        // для боковой шторки
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawerLayout, toolbar_main, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
 
-        //NavigationView - боковая шторка
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 
-        //__________________________________________________________________________________________
-        navigationView.bringToFront();  // вывести вперед / на передний план
-        // если не работает слушатель для боковой шторки - то использовать этот метод
-        //__________________________________________________________________________________________
+        navigationView.bringToFront();
 
-        // слушатель для боковой шторки
         navigationView.setNavigationItemSelectedListener(this);
 
-
-        // регистрируем ресивер
         registerReceiver(receiver,intentFilter);
     }
 
 
 
-    // переопределяем регистрацию слушателя в супер методах
     @Override
     protected void onResume() {
         super.onResume();
@@ -199,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // метод для проверки инета
         public void onCheckInternet (){
 
-            // запускаем проверку интернета и запуск AsyncTask
+
             if (isInternetAvailable(getApplicationContext()) == false){
                 Toast toast = Toast.makeText(getApplicationContext(), "проверьте соединение с интернетом", Toast.LENGTH_LONG);
                 toast.show();
@@ -207,39 +145,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             else {
 
-                //______________________________________________________________________________________
-                // проверка - запускался ли уже асинхронный метод
-                if (onStartAsyncTask == false) {    // если еще не запускался, то
-                 //   newsAsyncTask_obj.();
-                    onStartAsyncTask = true;        // ставим true - уже запускался
+
+                if (onStartAsyncTask == false) {
+                    onStartAsyncTask = true;
                 }
                 else {
-                    // ничего не делать
+
                 }
             }
 
         }
 
-        // метод для проверки интернета
         public boolean isInternetAvailable(Context context) {
             ConnectivityManager conMgr = (ConnectivityManager) context
                     .getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo i = conMgr.getActiveNetworkInfo();
-            if (i == null)  // если вообще ничего нет
+            if (i == null)
                 return false;
-            if (!i.isConnected())   // если не соединяется
+            if (!i.isConnected())
                 return false;
-            if (!i.isAvailable())   // если не доступно
+            if (!i.isAvailable())
                 return false;
             return true;
         }
 
 
-
-
-
-
-    // метод для скрытия и открытия шторки
     @Override
     public void onBackPressed (){
 
@@ -261,7 +191,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             if (id == R.id.shops_menu){
 
-                // переход на активити списка магазинов
                 Intent intentShopsList  = new Intent(this, ShopsListActivity.class);
                 startActivity(intentShopsList);
             }
@@ -279,56 +208,44 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     startActivity(intentAboutApp);
             }
 
-            drawerLayout.closeDrawer(GravityCompat.START);   // закрытие боковой шторки после нажатия
+            drawerLayout.closeDrawer(GravityCompat.START);
 
         return true;
     }
 
 
 
-    //  метод для меню в тулбаре
 
     @Override
     public boolean onCreateOptionsMenu (Menu menu){
 
-        // Inflater - наполнитель, "раздуватель"
-
-        // получаем меню для раздувателя - метод раздуть - в параметрах ссылка на макет меню
-        // и объект класса меню в параметрах самого метода
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
 
         MenuItem menuItem_Share = menu.findItem(R.id.share_app);
 
-        // задаем кнопке Провайдера действия
         shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem_Share);
 
-        // передаем в метод текст для неявного интента
         setShareActionIntent ("Поделиться новым приложением Пинега");
 
-        // метод boolean - значит возвращаем - метод создать опции меню
         return super.onCreateOptionsMenu(menu);
     }
 
 
-
-    // метод для неявного интента кнопки поделиться
     public void setShareActionIntent (String text){
 
-        Intent neyav_intent = new Intent(Intent.ACTION_SEND); // действие отправить
-        neyav_intent.setType("text / plain");   // тип данных - текст / простой
-        neyav_intent.putExtra(Intent.EXTRA_TEXT, text); // поместить объект text - объявлен в параметрах метода
-        shareActionProvider.setShareIntent(neyav_intent);       // провайдер действия поделиться - задаем наш интент
+        Intent neyav_intent = new Intent(Intent.ACTION_SEND);
+        neyav_intent.setType("text / plain");
+        neyav_intent.putExtra(Intent.EXTRA_TEXT, text);
+        shareActionProvider.setShareIntent(neyav_intent);
     }
 
 
-
-    // метод для поиска выбранного айтема меню тулбара
     @Override
     public boolean onOptionsItemSelected (MenuItem item){
 
         switch (item.getItemId()){
 
-            case R.id.dev_activity: // переход на страницу разработчика
+            case R.id.dev_activity:
 
                 Intent developer_intent = new Intent(this, DeveloperActivity.class);
                 startActivity(developer_intent);
@@ -341,16 +258,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
 
-  // класс для ViewPager  - его АДАПТЕР
     private class SectionPagerAdapter extends FragmentPagerAdapter {
 
-        // конструктор для возврата объекта класса FragmentManager - fm
         SectionPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
 
-        // тут определяем какие фрагменты и как должны выводиться
       @Override
       public Fragment getItem(int i) {
 
@@ -369,7 +283,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
       }
 
 
-        // общее количество фрагментов
       @Override
       public int getCount() {
           return 3;
@@ -377,9 +290,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
 
-
-
-      // метод для TabLayout  - отображение названия вкладок
       @Override
       public CharSequence getPageTitle (int i){
 
@@ -398,11 +308,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
       }
 
-
   }
-
-
-
 
 
 }

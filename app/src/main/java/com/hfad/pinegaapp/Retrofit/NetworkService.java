@@ -25,7 +25,7 @@ public class NetworkService {
     }
 
 
-    // паттерн singleton для возврата единственного экземпляра класса
+    // возврат единственного экземпляра класса
     public static NetworkService getInstance() {
         if (mInstance == null){
             mInstance = new NetworkService();
@@ -34,8 +34,6 @@ public class NetworkService {
     }
 
 
-
-    // метод для возврата класса на основе интерфейса
     public GetPostsVK getJSON_Create (){
         return mRetrofit.create(GetPostsVK.class);
     }
